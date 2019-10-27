@@ -17,14 +17,11 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
+    hypo_vec = X*theta;
 
-
-
-
-
-
-
-
+    len = size(theta);
+    for i=1:len
+        theta(i) = theta(i) - alpha*(1/m)*sum(((hypo_vec .- y)).*X(:,i));
 
 
     % ============================================================
