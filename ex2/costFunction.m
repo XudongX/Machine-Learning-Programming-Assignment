@@ -20,12 +20,11 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+hypo_vec = sigmoid(theta'*X')';
 
+J = (-1/m)*sum(y.*log(hypo_vec)+(1.-y).*log(1-hypo_vec));
 
-
-
-
-
+grad = (1/m)*(hypo_vec-y)'*X;
 
 % =============================================================
 
