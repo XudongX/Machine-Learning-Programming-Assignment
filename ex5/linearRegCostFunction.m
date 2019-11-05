@@ -20,14 +20,12 @@ grad = zeros(size(theta));
 %
 
 
+hypo_vec = X * theta;
 
+J = 1/(2*m)*sum((hypo_vec-y).^2) + (lambda/(2*m))*sum(theta(2:end,:).^2);
 
-
-
-
-
-
-
+theta(1) = 0;
+grad = 1/m*sum((hypo_vec-y).*X) .+ (lambda/m)*theta';
 
 
 % =========================================================================
