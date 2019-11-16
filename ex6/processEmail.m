@@ -97,14 +97,14 @@ while ~isempty(email_contents)
     %       str2). It will return 1 only if the two strings are equivalent.
     %
 
-
-
-
-
-
-
-
-
+    % vacabList is cell array object, not a vector or matrix.
+    % str is a single string.
+    % word_indeces is return value, a vector
+    for i = 1:length(vocabList)
+      if(strcmp(str, vocabList{i}))
+        word_indices = [word_indices;i];
+      end
+    end
 
     % =============================================================
 

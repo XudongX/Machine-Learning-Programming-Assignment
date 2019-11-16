@@ -23,10 +23,30 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+fprintf('-------\n');
+fprintf('start searching best [C, sigma] values\n');
+error_min = inf;  % inf是内置函数，返回最大浮点数
+values = [0.01 0.03 0.1 0.3 1 3 10 30];  % 硬编码测试序列，C sigma均从此数组取值，共8^2种组合
 
+for _C = values
+  for _sigma = values
+    fprintf('Train and evaluate (on cross validation set) for\n[_C, _sigma] = [%f %f]\n', _C, _sigma);
+    model = svmTrain(X, y, _C, @(x1, x2) gaussianKernel(x1, x2, _sigma));  % 使用匿名函数@(x1,x2)减少和固定kernel函数参数。
+    e = mean(double(svmPredict(model, Xval) ~= yval));
+    fprintf('prediction error: %f\n', e);
+    if( e <= error_min )
+      fprintf('error_min updated!\n');
+      C = _C;
+      sigma = _sigma;
+      error_min = e;
+      fprintf('[C, sigma] = [%f %f]\n', C, sigma);
+    end
+    fprintf('-------\n');
+  end
+end
 
-
-
+fprintf('\nfinish searching.\nBest value [C, sigma] = [%f %f] with prediction error = %f\n\n', C, sigma, error_min);
+fprintf('-------\n');
 
 
 % =========================================================================
